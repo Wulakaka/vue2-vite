@@ -1,8 +1,12 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <SwiperTest></SwiperTest>
   </div>
 </template>
+<script setup>
+import SwiperTest from '@/components/Swiper/SwiperTest.vue'
+</script>
 
 <style>
 @media (min-width: 1024px) {
