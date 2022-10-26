@@ -11,6 +11,7 @@ const useDevMode = true
 import { name } from './package.json'
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: `/micro/${name}/`,
   plugins: [
     vue2(),
     vue2Jsx(),
@@ -23,7 +24,6 @@ export default defineConfig({
       useDevMode,
     }),
   ],
-  base: '/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

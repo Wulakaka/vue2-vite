@@ -11,6 +11,7 @@ import {
   renderWithQiankun,
   qiankunWindow,
 } from 'vite-plugin-qiankun/dist/helper'
+
 Vue.use(PiniaVuePlugin)
 Vue.use(VueRouter)
 
@@ -21,8 +22,9 @@ type Props = object & { container?: HTMLElement }
 
 function render(props: Props = {}) {
   const { container } = props
+  const appName = 'vue2-vite'
   router = new VueRouter({
-    base: qiankunWindow.__POWERED_BY_QIANKUN__ ? '/micro/vue2-vite/' : '/',
+    base: qiankunWindow.__POWERED_BY_QIANKUN__ ? `/micro/${appName}/` : '/',
     mode: 'history',
     routes,
   })
@@ -37,10 +39,12 @@ function render(props: Props = {}) {
 export async function bootstrap() {
   console.log('[vue] vue app bootstraped')
 }
+
 export async function mount(props: Props) {
   console.log('[vue] props from main framework', props)
   render(props)
 }
+
 export async function unmount() {
   if (instance) {
     instance.$destroy()
