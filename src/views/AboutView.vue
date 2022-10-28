@@ -9,7 +9,7 @@
 <script setup>
 // import SwiperTest from '@/components/Swiper/SwiperTest.vue'
 // import SvgSample from '@/components/SvgSample.vue'
-import Chart2 from '@/components/Chart2.vue'
+import Chart2 from '@/components/Chart1.vue'
 </script>
 
 <style>
