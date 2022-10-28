@@ -10,8 +10,8 @@ import qiankun from 'vite-plugin-qiankun'
 const useDevMode = true
 import { name } from './package.json'
 // https://vitejs.dev/config/
-export default defineConfig({
-  base: `/micro/${name}/`,
+export default defineConfig(({ command }) => ({
+  base: command === 'serve' ? '/' : `/micro/${name}/`,
   plugins: [
     vue2(),
     vue2Jsx(),
@@ -29,4 +29,4 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-})
+}))
