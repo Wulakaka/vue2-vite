@@ -11,6 +11,11 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@babel/core": "^7.19.6",
+    "@types/d3": "^7.4.0",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0",
+    "@vue/babel-preset-jsx": "^1.4.0",
+    "d3": "^7.6.1",
     "pinia": "^2.0.16",
     "swiper": "^8.4.2",
     "vue": "^2.7.7",
@@ -35,6 +40,7 @@
     "terser": "^5.14.2",
     "typescript": "~4.7.4",
     "vite": "^3.0.2",
+    "vite-plugin-babel": "^1.1.2",
     "vite-plugin-qiankun": "^1.0.15",
     "vitest": "^0.18.1",
     "vue-template-compiler": "^2.7.7",

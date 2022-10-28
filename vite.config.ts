@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import legacy from '@vitejs/plugin-legacy'
 import vue2 from '@vitejs/plugin-vue2'
 import vue2Jsx from '@vitejs/plugin-vue2-jsx'
+import babel from 'vite-plugin-babel'
 
 import qiankun from 'vite-plugin-qiankun'
 
@@ -13,6 +14,7 @@ import { name } from './package.json'
 export default defineConfig(({ command }) => ({
   base: command === 'serve' ? '/' : `/micro/${name}/`,
   plugins: [
+    babel(),
     vue2(),
     vue2Jsx(),
     legacy({
