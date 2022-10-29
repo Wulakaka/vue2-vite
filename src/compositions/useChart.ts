@@ -19,6 +19,8 @@ function getChart(list) {
     '#bee5fb',
   ]
 
+  const basis = d3.interpolateRgbBasis(colors)
+
   const svg = d3.create('svg').attr('viewBox', [-90, -90, 180, 180])
   const defs = svg.append('defs')
   const mask = defs.append('mask').attr('id', 'mask')
@@ -70,7 +72,7 @@ function getChart(list) {
   const paths = pieArcData.map((i) => {
     return group
       .append('path')
-      .attr('fill', colors[i.index])
+      .attr('fill', basis(i.index / list.length))
       .attr('d', arcPie(i))
   })
 
@@ -80,43 +82,40 @@ function getChart(list) {
     index++
     paths.forEach((p, i) => {
       if (i === index % list.length) {
-        p.transition()
-          .duration(1000)
-          .attrTween('d', function () {
-            return function (t) {
-              const arc = d3
-                .arc()
-                .innerRadius(70 - d3.easeBounceOut(t) * 20)
-                .outerRadius(90)
-                .padRadius(90)
-                .padAngle(10 / 90)
-                .cornerRadius(1)
+        const t = d3.transition().duration(1000).ease(d3.easeBounceOut)
+        p.transition(t).attrTween('d', function () {
+          return function (t) {
+            const arc = d3
+              .arc()
+              .innerRadius(70 - t * 20)
+              .outerRadius(90)
+              .padRadius(90)
+              .padAngle(10 / 90)
+              .cornerRadius(1)
 
-              return arc(pieArcData[i])
-            }
-          })
+            return arc(pieArcData[i])
+          }
+        })
       } else if (i === (index - 1) % list.length) {
-        p.transition()
-          .duration(300)
-          .attrTween('d', function () {
-            return function (t) {
-              const inter = d3.interpolateNumber(50, 70)
-              const arc = d3
-                .arc()
-                .innerRadius(inter(t))
-                .outerRadius(90)
-                .padRadius(90)
-                .padAngle(10 / 90)
-                .cornerRadius(1)
+        const t = d3.transition().duration(1000).ease(d3.easeBounceIn)
+        p.transition(t).attrTween('d', function () {
+          return function (t) {
+            const arc = d3
+              .arc()
+              .innerRadius(50 + 20 * t)
+              .outerRadius(90)
+              .padRadius(90)
+              .padAngle(10 / 90)
+              .cornerRadius(1)
 
-              return arc(pieArcData[i])
-            }
-          })
+            return arc(pieArcData[i])
+          }
+        })
       }
     })
   }, 1000)
 
-  svg
+  const innerCircle = svg
     .append('circle')
     .attr('r', 48)
     .attr('cx', 0)
@@ -125,7 +124,16 @@ function getChart(list) {
     .attr('stroke', '#cacdf7')
     .attr('stroke-dasharray', [2, 4])
     .attr('stroke-width', 4)
-    .attr('transform', 'rotate(45)')
+    .attr('transform', 'rotate(0)')
+
+  setInterval(() => {
+    const t = d3.transition().duration(2000).ease(d3.easeLinear)
+    innerCircle.transition(t).attrTween('transform', function () {
+      return function (t) {
+        return `rotate(${t * 180})`
+      }
+    })
+  }, 2000)
 
   return svg.node()
 }
