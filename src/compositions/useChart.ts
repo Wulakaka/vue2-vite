@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import { onMounted, ref, type Ref } from 'vue'
 
-function getChart(list) {
+function getChart(list: { name: string; value: number }[]) {
   const arcPie = d3
     .arc()
     .innerRadius(70)
@@ -69,6 +69,7 @@ function getChart(list) {
   const pieArcData = d3
     .pie<{ name: string; value: number }>()
     .value((d) => d.value)(list)
+
   const paths = pieArcData.map((i) => {
     return group
       .append('path')
@@ -159,6 +160,6 @@ export default function useChart(el: Ref<HTMLElement | undefined>) {
   ])
   onMounted(() => {
     const svg = getChart(list.value)
-    el.value?.appendChild(svg)
+    svg && el.value?.appendChild(svg)
   })
 }

@@ -47,6 +47,6 @@ function getChart() {
 export default function useChart(el: Ref<HTMLElement | undefined>) {
   onMounted(() => {
     const svg = getChart()
-    el.value?.appendChild(svg)
+    svg && el.value?.appendChild(svg)
   })
 }
