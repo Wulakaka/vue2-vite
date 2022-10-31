@@ -5,6 +5,7 @@
     <!--    <SwiperTest></SwiperTest>-->
     <Chart3></Chart3>
     <Chart4></Chart4>
+    <Chart6></Chart6>
   </div>
 </template>
 <script setup>
@@ -12,6 +13,7 @@
 // import SvgSample from '@/components/SvgSample.vue'
 import Chart3 from '@/components/Chart3.vue'
 import Chart4 from '@/components/Chart4.vue'
+import Chart6 from '@/components/Chart6.vue'
 </script>
 
 <style>
