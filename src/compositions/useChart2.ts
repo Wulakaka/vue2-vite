@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import { onMounted, ref, type Ref } from 'vue'
+import { onMounted, type Ref } from 'vue'
 
 function getChart() {
   const svg = d3.create('svg').attr('viewBox', [-100, -100, 200, 200])
@@ -21,26 +21,37 @@ function getChart() {
 
   let i = 0
 
-  const doAnimate = () => {
-    const t = d3.transition().duration(interval).ease(d3.easeElasticInOut)
-    group.transition(t).attrTween('transform', function () {
-      return function (t) {
-        return `rotate(${45 * t + 45 * i})`
-      }
+  const t = d3.transition().duration(interval).ease(d3.easeElasticInOut)
+
+  setTimeout(() => {
+    group.transition(t).on('start', function repeat() {
+      i++
+      d3.active(this)
+        .attrTween('transform', function () {
+          return function (t) {
+            return `rotate(${45 * t + 45 * i})`
+          }
+        })
+        .transition()
+        .delay(interval)
+        .on('start', repeat)
     })
+
     flags.forEach((flag, index) => {
       const t = d3.transition().duration(interval).ease(d3.easeLinear)
-      flag.transition(t).attrTween('fill', function () {
-        return function (t) {
-          return d3.interpolateRainbow(index / 4 + t)
-        }
+      flag.transition(t).on('start', function repeat() {
+        d3.active(this)
+          .attrTween('fill', function () {
+            return function (t) {
+              return d3.interpolateRainbow(index / 4 + t)
+            }
+          })
+          .transition()
+          .on('start', repeat)
       })
     })
-    i++
-    setTimeout(doAnimate, interval)
-  }
+  })
 
-  setTimeout(doAnimate)
   return svg.node()
 }
 
