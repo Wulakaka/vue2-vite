@@ -18,7 +18,6 @@ const isDragging = ref(false)
 const interval = 300
 
 const emitLeft = overtime(() => {
-  console.log('left', props.name)
   emit('enter-left')
 }, interval)
 
@@ -28,7 +27,6 @@ function handleTargetDragOverLeft(e: DragEvent) {
 }
 
 const emitRight = overtime(() => {
-  console.log('right', props.name)
   emit('enter-right')
 }, interval)
 function handleTargetDragOverRight(e: DragEvent) {
@@ -65,6 +63,10 @@ function handleSourceDragEnd() {
   isDragging.value = false
   emit('drag-end')
 }
+
+function handleInnerDragOver(e: DragEvent) {
+  e.preventDefault()
+}
 </script>
 <template>
   <div class="item-wrapper" :class="{ 'item-wrapper--dragging': isDragging }">
@@ -86,6 +88,7 @@ function handleSourceDragEnd() {
       @drag="handleSourceDrag"
       @dragstart="handleSourceDragStart"
       @dragend="handleSourceDragEnd"
+      @dragover="handleInnerDragOver"
     >
       {{ name }}
     </div>
@@ -96,18 +99,18 @@ function handleSourceDragEnd() {
 %mark {
   outline-offset: -1px;
   outline: rgba(red, 0.2) dashed 1px;
-  background: rgba(red, 0.1);
+  background: rgba(red, 0.01);
 }
 .item-wrapper {
   width: 200px;
   height: 200px;
   display: flex;
   position: relative;
-  outline: 1px solid #ff8000;
   transition: 0.3s;
+  @extend %mark;
 
   &--dragging {
-    opacity: 0.5;
+    opacity: 0;
   }
 
   &__left,

@@ -28,26 +28,40 @@ function useList() {
     current.value = item
   }
 
-  const spliceItem = () => {
-    const [item] = list.value.splice(currentIndex.value, 1)
-    return item
-  }
-
-  const insertBefore = (index: number, item: Wrapper) => {
-    list.value.splice(index, 0, item)
-  }
-  const insertAfter = (index: number, item: Wrapper) => {
-    list.value.splice(index + 1, 0, item)
-  }
-
   const exchangeBefore = (index: number) => {
-    const item = spliceItem()
-    insertBefore(index, item)
+    console.log('before', 'placed', index, 'current', currentIndex.value)
+    if (!current.value) return
+    if (currentIndex.value === index) return
+    if (currentIndex.value === index - 1) return
+    const arr = list.value.slice()
+    if (currentIndex.value < index) {
+      // 插入后再删除
+      arr.splice(index, 0, current.value)
+      arr.splice(currentIndex.value, 1)
+    } else {
+      // 先删除再插入
+      arr.splice(currentIndex.value, 1)
+      arr.splice(index, 0, current.value)
+    }
+    list.value = arr
   }
 
   const exchangeAfter = (index: number) => {
-    const item = spliceItem()
-    insertAfter(index, item)
+    console.log('after', 'placed', index, 'current', currentIndex.value)
+    if (!current.value) return
+    if (currentIndex.value === index) return
+    if (currentIndex.value === index + 1) return
+    const arr = list.value.slice()
+    if (currentIndex.value < index) {
+      // 先删除再插入
+      arr.splice(currentIndex.value, 1)
+      arr.splice(index, 0, current.value)
+    } else {
+      // 先删除再插入
+      arr.splice(currentIndex.value, 1)
+      arr.splice(index + 1, 0, current.value)
+    }
+    list.value = arr
   }
 
   return {
