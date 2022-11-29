@@ -2,8 +2,7 @@ import Vue from 'vue'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
 import App from './App.vue'
-// import router from './router'
-import routes from './router/routes'
+import router from './router'
 import VueRouter from 'vue-router'
 
 import './assets/main.css'
@@ -15,19 +14,12 @@ import {
 Vue.use(PiniaVuePlugin)
 Vue.use(VueRouter)
 
-let router = null
 let instance: null | Vue = null
 
 type Props = object & { container?: HTMLElement }
 
 function render(props: Props = {}) {
   const { container } = props
-  const appName = 'vue2-vite'
-  router = new VueRouter({
-    base: qiankunWindow.__POWERED_BY_QIANKUN__ ? `/micro/${appName}/` : '/',
-    mode: 'history',
-    routes,
-  })
 
   instance = new Vue({
     router,
@@ -50,7 +42,6 @@ export async function unmount() {
     instance.$destroy()
     instance.$el.innerHTML = ''
     instance = null
-    router = null
   }
 }
 

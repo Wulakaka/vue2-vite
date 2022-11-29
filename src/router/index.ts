@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { qiankunWindow } from 'vite-plugin-qiankun/dist/helper'
 
 Vue.use(VueRouter)
 
-const router = new VueRouter({
+const appName = 'vue2-vite'
+
+export default new VueRouter({
+  base: qiankunWindow.__POWERED_BY_QIANKUN__ ? `/micro/${appName}/` : '/',
   mode: 'history',
-  base: import.meta.env.BASE_URL,
   routes: [
     {
       path: '/',
@@ -26,7 +29,10 @@ const router = new VueRouter({
       name: 'image',
       component: () => import('../views/ImageView.vue'),
     },
+    {
+      path: '/list',
+      name: 'list',
+      component: () => import('../views/ListView/index.vue'),
+    },
   ],
 })
-
-export default router
