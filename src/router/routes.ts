@@ -14,6 +14,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/AboutView.vue'),
   },
+  {
+    path: '/image',
+    name: 'image',
+    component: () => import('../views/ImageView.vue'),
+  },
 ]
 
 export default routes
