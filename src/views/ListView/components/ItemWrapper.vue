@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import overtime from '@/utils/overtime'
+import type { Wrapper } from '@/views/ListView/types'
+import { useDraggingItemStore } from '@/stores/draggingItem'
+const store = useDraggingItemStore()
 
 const props = defineProps<{
-  name: string
+  data: Wrapper
 }>()
 
 const emit = defineEmits<{
@@ -11,6 +14,7 @@ const emit = defineEmits<{
   (e: 'drag-end'): void
   (e: 'enter-left'): void
   (e: 'enter-right'): void
+  (e: 'drop', data: Wrapper): void
 }>()
 
 const isDragging = ref(false)
@@ -55,8 +59,9 @@ function handleSourceDrag() {
   // console.log('drag')
 }
 
-function handleSourceDragStart() {
+function handleSourceDragStart(e: DragEvent) {
   isDragging.value = true
+  store.set(props.data)
   emit('drag-start')
 }
 function handleSourceDragEnd() {
@@ -67,20 +72,40 @@ function handleSourceDragEnd() {
 function handleInnerDragOver(e: DragEvent) {
   e.preventDefault()
 }
+
+function handleDrop(e: DragEvent) {
+  const data = store.item
+  if (data) {
+    emit('drop', data)
+  }
+  store.set(null)
+}
+
+function handleDragLeaveInner() {
+  // console.log('drag leave inner')
+}
 </script>
 <template>
-  <div class="item-wrapper" :class="{ 'item-wrapper--dragging': isDragging }">
+  <div
+    class="item-wrapper"
+    :class="{
+      'item-wrapper--dragging': isDragging,
+      'item-wrapper--dragging': data.type === 'placeholder',
+    }"
+  >
     <div
       class="item-wrapper__left"
-      @dragover="handleTargetDragOverLeft"
+      @dragover.stop="handleTargetDragOverLeft"
       @dragenter="handleTargetDragEnterLeft"
       @dragleave="handleTargetDragLeaveLeft"
+      @drop.stop="handleDrop"
     ></div>
     <div
       class="item-wrapper__right"
-      @dragover="handleTargetDragOverRight"
+      @dragover.stop="handleTargetDragOverRight"
       @dragenter="handleTargetDragEnterRight"
       @dragleave="handleTargetDragLeaveRight"
+      @drop.stop="handleDrop"
     ></div>
     <div
       class="item-wrapper__center"
@@ -89,8 +114,9 @@ function handleInnerDragOver(e: DragEvent) {
       @dragstart="handleSourceDragStart"
       @dragend="handleSourceDragEnd"
       @dragover="handleInnerDragOver"
+      @dragleave="handleDragLeaveInner"
     >
-      {{ name }}
+      {{ data.name }}
     </div>
   </div>
 </template>

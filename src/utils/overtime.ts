@@ -1,4 +1,5 @@
-export default function (fn: (e?: any) => void, interval: number): () => void {
+type InputFn = (...args: any[]) => any
+export default function (fn: InputFn, interval: number): InputFn {
   let startTime: number, endTime: number
   let timer: number
   return function (...args) {
@@ -7,8 +8,8 @@ export default function (fn: (e?: any) => void, interval: number): () => void {
     }
     endTime = performance.now()
     if (endTime - startTime > interval) {
-      fn(...args)
       startTime = 0
+      return fn(...args)
     } else {
       if (timer) {
         clearTimeout(timer)

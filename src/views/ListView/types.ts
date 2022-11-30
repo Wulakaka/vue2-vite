@@ -1,5 +1,5 @@
-export interface Node {
+export interface Wrapper {
   name: string
   id: number
-  type: ''
+  type: 'entity' | 'placeholder'
 }
