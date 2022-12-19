@@ -39,5 +39,10 @@ export default new VueRouter({
       name: 'list2',
       component: () => import('../views/ListView2/index.vue'),
     },
+    {
+      path: '/drag',
+      name: 'drag',
+      component: () => import('../views/DragView.vue'),
+    },
   ],
 })
