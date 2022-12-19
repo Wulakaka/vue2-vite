@@ -8,6 +8,7 @@
     <Chart6></Chart6>
     <ChartLine1></ChartLine1>
     <ChartBar1></ChartBar1>
+    <Chart5></Chart5>
   </div>
 </template>
 <script setup>
@@ -18,6 +19,7 @@ import Chart4 from '@/components/Chart4.vue'
 import Chart6 from '@/components/Chart6.vue'
 import ChartLine1 from '@/components/ChartLine1.vue'
 import ChartBar1 from '@/components/ChartBar1.vue'
+import Chart5 from '@/components/Chart5.vue'
 </script>
 
 <style>
