@@ -44,5 +44,10 @@ export default new VueRouter({
       name: 'drag',
       component: () => import('../views/DragView.vue'),
     },
+    {
+      path: '/clip',
+      name: 'clip',
+      component: () => import('../views/ClipView.vue'),
+    },
   ],
 })
