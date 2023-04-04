@@ -4,6 +4,12 @@ import TheWelcome from '@/components/TheWelcome.vue'
 
 <template>
   <main>
+    <button class="a-button">a-button</button>
     <TheWelcome />
   </main>
 </template>
+<style>
+.a-button {
+  color: greenyellow;
+}
+</style>

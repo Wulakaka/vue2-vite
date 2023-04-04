@@ -8,12 +8,20 @@ import babel from 'vite-plugin-babel'
 
 import qiankun from 'vite-plugin-qiankun'
 
+import replace from '@rollup/plugin-replace'
+
 const useDevMode = true
 import { name } from './package.json'
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => ({
   base: command === 'serve' ? '/' : `/micro/${name}/`,
   plugins: [
+    replace({
+      values: {
+        'a-': 'b-',
+      },
+      exclude: ['./src/**'],
+    }),
     babel(),
     vue2(),
     vue2Jsx(),
