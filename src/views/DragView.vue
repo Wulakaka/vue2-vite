@@ -11,6 +11,7 @@ function handleSourceDragStart() {
 function handleSourceDragEnd() {
   console.log('drag end')
   status.value = ''
+  Promise.resolve('drag end promise').then(console.log)
 }
 
 function handleTargetDragOver() {
@@ -20,15 +21,21 @@ function handleTargetDragOver() {
 function handleTargetDrop() {
   console.log('drop')
   targetText.value = 'drop'
+  Promise.resolve('drop promise').then(console.log)
 }
 
 function handleViewDrop() {
-  console.log('drop view')
+  // 事件冒泡是宏任务
+  console.log('drop outer')
 }
 
 function handleViewDragEnd() {
-  console.log('drag end view')
+  console.log('drag end outer')
 }
+
+console.log(1)
+Promise.resolve(2).then(console.log)
+console.log(3)
 </script>
 <template>
   <div class="drag-view" @drop="handleViewDrop" @dragend="handleViewDragEnd">
