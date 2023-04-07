@@ -13,9 +13,11 @@
   "dependencies": {
     "@babel/core": "^7.19.6",
     "@types/d3": "^7.4.0",
+    "@types/lodash-es": "^4.17.7",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0",
     "@vue/babel-preset-jsx": "^1.4.0",
     "d3": "^7.6.1",
+    "lodash-es": "^4.17.21",
     "pinia": "^2.0.16",
     "sass": "^1.55.0",
     "swiper": "^8.4.2",

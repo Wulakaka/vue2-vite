@@ -42,7 +42,7 @@ export default new VueRouter({
     {
       path: '/drag',
       name: 'drag',
-      component: () => import('../views/DragView.vue'),
+      component: () => import('../views/Drag/DragView.vue'),
     },
     {
       path: '/clip',
